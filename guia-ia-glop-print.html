@@ -199,31 +199,31 @@
     }
 
     /* ─── CATEGORIES GRID ─── */
-    .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
-    .cats-3 { grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+    .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+    .cats-3 { grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
 
     .cat {
       background: #fff; border: 1px solid var(--border);
-      border-radius: 10px; overflow: hidden;
+      border-radius: 8px; overflow: hidden;
     }
     .cat-head {
-      padding: 4mm 5mm 3mm;
+      padding: 2.5mm 4mm 2mm;
       border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; gap: 6px;
     }
     .cat-dot {
-      width: 8px; height: 8px; border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--green); flex-shrink: 0;
     }
     .cat-head h4 {
-      font-size: 8.5pt; font-weight: 700; color: var(--text);
+      font-size: 8pt; font-weight: 700; color: var(--text);
       letter-spacing: 0.01em;
     }
-    .cat-body { padding: 3mm 5mm 4mm; display: flex; flex-direction: column; gap: 2.5px; }
+    .cat-body { padding: 2mm 4mm 2.5mm; display: flex; flex-direction: column; gap: 2px; }
     .q {
-      font-size: 7.5pt; color: var(--text-mid);
+      font-size: 7pt; color: var(--text-mid);
       background: #F7F9F7; border: 1px solid #EAEEF0;
-      border-radius: 5px; padding: 3.5px 7px; line-height: 1.35;
+      border-radius: 4px; padding: 2.5px 6px; line-height: 1.3;
     }
     .q::before { content: '"'; opacity: 0.4; }
     .q::after  { content: '"'; opacity: 0.4; }
@@ -415,7 +415,7 @@
      PÁGINAS DE CATEGORÍAS — helper
 ════════════════════════════════════════════════════════ -->
 
-<!-- Pág 4 -->
+<!-- Pág 4 — bloques 1–8 -->
 <div class="page">
   <div class="page-header">
     <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
@@ -423,7 +423,7 @@
   </div>
   <div class="page-body">
     <p class="section-label">Referencia completa</p>
-    <h2 class="section-title" style="font-size:16pt;margin-bottom:7mm">¿Qué puedes preguntarle?</h2>
+    <h2 class="section-title" style="font-size:13pt;margin-bottom:4mm">¿Qué puedes preguntarle?</h2>
     <div class="cats">
       <div class="cat">
         <div class="cat-head"><div class="cat-dot"></div><h4>Ventas y Facturación</h4></div>
@@ -467,22 +467,6 @@
           <div class="q">¿Qué familia tiene el ticket medio más alto?</div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="page-footer">
-    <span>Guía Práctica: Asistente IA · Glop</span>
-    <span class="page-number">04</span>
-  </div>
-</div>
-
-<!-- Pág 5 -->
-<div class="page">
-  <div class="page-header">
-    <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
-    <span class="page-header-title">Qué puedes preguntarle</span>
-  </div>
-  <div class="page-body" style="padding-top:8mm">
-    <div class="cats">
       <div class="cat">
         <div class="cat-head"><div class="cat-dot"></div><h4>Tendencias</h4></div>
         <div class="cat-body">
@@ -530,11 +514,11 @@
   </div>
   <div class="page-footer">
     <span>Guía Práctica: Asistente IA · Glop</span>
-    <span class="page-number">05</span>
+    <span class="page-number">04</span>
   </div>
 </div>
 
-<!-- Pág 6 -->
+<!-- Pág 5 — bloques 9–16 -->
 <div class="page">
   <div class="page-header">
     <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
@@ -583,22 +567,6 @@
           <div class="q">¿En qué franja horaria se producen más borrados?</div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="page-footer">
-    <span>Guía Práctica: Asistente IA · Glop</span>
-    <span class="page-number">06</span>
-  </div>
-</div>
-
-<!-- Pág 7 -->
-<div class="page">
-  <div class="page-header">
-    <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
-    <span class="page-header-title">Qué puedes preguntarle</span>
-  </div>
-  <div class="page-body" style="padding-top:8mm">
-    <div class="cats">
       <div class="cat">
         <div class="cat-head"><div class="cat-dot"></div><h4>Invitaciones</h4></div>
         <div class="cat-body">
@@ -644,11 +612,11 @@
   </div>
   <div class="page-footer">
     <span>Guía Práctica: Asistente IA · Glop</span>
-    <span class="page-number">07</span>
+    <span class="page-number">05</span>
   </div>
 </div>
 
-<!-- Pág 8 -->
+<!-- Pág 6 — bloques 17–20 -->
 <div class="page">
   <div class="page-header">
     <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
@@ -702,7 +670,7 @@
   </div>
   <div class="page-footer">
     <span>Guía Práctica: Asistente IA · Glop</span>
-    <span class="page-number">08</span>
+    <span class="page-number">06</span>
   </div>
 </div>
 

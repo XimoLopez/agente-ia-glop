@@ -270,13 +270,32 @@
       color: var(--text); background: var(--bg);
       border: 1px solid var(--border); border-radius: 8px;
       padding: 8px 12px; line-height: 1.4;
-      transition: all .12s; cursor: default;
+      transition: all .12s; cursor: pointer;
+      user-select: none;
     }
     .q-chip:hover {
       background: var(--green-light);
       border-color: var(--green-mid);
       color: var(--green-dark);
     }
+    .q-chip:active { transform: scale(0.98); }
+
+    /* ─── COPY TOAST ─── */
+    #copy-toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: #1a1a1a; color: #fff;
+      padding: 9px 18px; border-radius: 999px;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
+      pointer-events: none; opacity: 0;
+      transition: opacity .18s ease, transform .18s ease;
+      display: flex; align-items: center; gap: 7px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.18);
+      z-index: 9999;
+    }
+    #copy-toast.show {
+      opacity: 1; transform: translateX(-50%) translateY(0);
+    }
+    #copy-toast svg { color: #4ade80; flex-shrink: 0; }
     .q-chip::before { content: '"'; opacity: 0.35; }
     .q-chip::after  { content: '"'; opacity: 0.35; }
 
@@ -366,10 +385,16 @@
   </div>
   <h1>Pregunta a tu negocio,<br><em>recibe respuestas al instante</em></h1>
   <p>Tu asistente IA conectado a Glop Cloud. Consulta tus datos de ventas en lenguaje natural, desde cualquier dispositivo, en segundos.</p>
-  <a href="#preguntas" class="hero-cta">
-    Ver qué puedes preguntar
-    <i data-lucide="arrow-right"></i>
-  </a>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="#preguntas" class="hero-cta">
+      Ver qué puedes preguntar
+      <i data-lucide="arrow-right"></i>
+    </a>
+    <a href="guia-ia-glop.pdf" download="Guia-IA-Glop.pdf" class="hero-cta" style="background:#fff;color:var(--green);border:2px solid var(--green);box-shadow:none;">
+      <i data-lucide="download"></i>
+      Descargar guía en PDF
+    </a>
+  </div>
 </section>
 
 <!-- CÓMO FUNCIONA -->
@@ -781,6 +806,45 @@
   <strong>Glop</strong> · Más que un TPV · <a href="https://glop.es">glop.es</a>
 </footer>
 
-<script>lucide.createIcons();</script>
+<div id="copy-toast">
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  Pregunta copiada
+</div>
+
+<script>
+lucide.createIcons();
+
+(function() {
+  let toastTimer;
+  const toast = document.getElementById('copy-toast');
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+    document.body.appendChild(el);
+    el.focus(); el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    return Promise.resolve();
+  }
+
+  function showToast() {
+    clearTimeout(toastTimer);
+    toast.classList.add('show');
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+  }
+
+  document.querySelectorAll('.q-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      const text = chip.textContent.replace(/^[""“”]/g, '').replace(/[""“”]$/g, '').trim();
+      copyText(text).then(showToast).catch(showToast);
+    });
+  });
+})();
+</script>
 </body>
 </html>
