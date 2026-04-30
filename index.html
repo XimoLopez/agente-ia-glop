@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía IA GLOP – Asistente de Ventas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --green: #00B461;
+      --green-dark: #008F4C;
+      --green-light: #E8F8EF;
+      --green-mid: #C0EDD4;
+      --orange: #E8591A;
+      --bg: #F7F8FA;
+      --card: #FFFFFF;
+      --text: #111827;
+      --text-secondary: #6B7280;
+      --border: #E5E7EB;
+      --radius: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* SVG icon sizing */
+    i[data-lucide] { display: inline-flex; }
+    i[data-lucide] svg { display: block; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 17px;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo-icon { width: 32px; height: 32px; flex-shrink: 0; }
+    .nav-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--green-light); color: var(--green-dark);
+      font-size: 11px; font-weight: 600;
+      padding: 4px 12px; border-radius: 20px; letter-spacing: 0.02em;
+    }
+    .nav-badge i[data-lucide] svg { width: 13px; height: 13px; stroke: var(--green-dark); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: #ffffff;
+      padding: 96px 32px 112px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-waves {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green-light);
+      border: 1px solid var(--green-mid);
+      color: var(--green-dark);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px; margin-bottom: 28px;
+      position: relative;
+    }
+    .hero-eyebrow i[data-lucide] svg { width: 13px; height: 13px; stroke: var(--green); }
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 68px); font-weight: 900;
+      color: #0A1F12; line-height: 1.06; letter-spacing: -0.03em;
+      margin: 0 auto 20px; max-width: 720px;
+      position: relative;
+    }
+    .hero h1 em { font-style: normal; color: var(--green); }
+    .hero p {
+      font-size: 18px; color: #4B6B59;
+      max-width: 500px; margin: 0 auto 40px; font-weight: 400;
+      position: relative;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green); color: #fff;
+      font-size: 14px; font-weight: 700;
+      padding: 14px 28px; border-radius: 12px;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s, background .15s;
+      box-shadow: 0 4px 20px rgba(0,180,97,0.30);
+      position: relative;
+    }
+    .hero-cta:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,180,97,0.35); }
+    .hero-cta i[data-lucide] svg { width: 16px; height: 16px; stroke: #fff; }
+
+    /* ─── CONTAINER ─── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 72px 0; }
+
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(26px, 4vw, 38px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.2;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 16px; color: var(--text-secondary);
+      max-width: 540px; line-height: 1.7;
+    }
+
+    /* ─── STEPS ─── */
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 48px;
+    }
+    @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+    .step-card {
+      background: var(--card); border-radius: var(--radius);
+      padding: 32px 28px; box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .step-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--green);
+    }
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      background: var(--green-light); color: var(--green-dark);
+      font-size: 17px; font-weight: 800;
+      border-radius: 12px; margin-bottom: 18px;
+    }
+    .step-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .step-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    .highlight-box {
+      background: linear-gradient(135deg, var(--green-light), #D0F5E3);
+      border: 1px solid var(--green-mid);
+      border-radius: var(--radius);
+      padding: 22px 26px; margin-top: 28px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .highlight-box-icon {
+      flex-shrink: 0; margin-top: 1px;
+      color: var(--green-dark);
+    }
+    .highlight-box-icon i[data-lucide] svg { width: 20px; height: 20px; stroke: var(--green-dark); }
+    .highlight-box p { font-size: 14.5px; color: #065930; line-height: 1.7; }
+    .highlight-box p strong { font-weight: 700; }
+
+    /* ─── USE CASES ─── */
+    .usecases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px; margin-top: 48px;
+    }
+    .usecase-card {
+      background: var(--card); border-radius: var(--radius);
+      padding: 24px; box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex; gap: 16px; align-items: flex-start;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .usecase-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .usecase-icon {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      background: var(--green-light);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--green-dark);
+    }
+    .usecase-icon i[data-lucide] svg { width: 22px; height: 22px; stroke: var(--green-dark); stroke-width: 1.75; }
+    .usecase-card h3 {
+      font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--orange); margin-bottom: 8px;
+    }
+    .usecase-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .usecase-card ul li {
+      font-size: 13.5px; color: var(--text-secondary);
+      padding-left: 14px; position: relative; line-height: 1.5;
+    }
+    .usecase-card ul li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--green); font-size: 11px; top: 1px;
+    }
+
+    /* ─── SECTION DIVIDER ─── */
+    .section-divider {
+      height: 1px; background: var(--border);
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    /* ─── QUESTIONS ─── */
+    #preguntas { padding-bottom: 100px; }
+
+    .categories-intro { margin-bottom: 48px; }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .cat-card {
+      background: var(--card); border-radius: var(--radius);
+      border: 1px solid var(--border); box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .cat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .cat-card.new-block { border: 2px solid var(--green); }
+
+    .cat-header {
+      padding: 16px 20px 13px;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cat-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg); flex-shrink: 0;
+      color: var(--green-dark);
+    }
+    .cat-icon i[data-lucide] svg { width: 19px; height: 19px; stroke: var(--green-dark); stroke-width: 1.75; }
+    .cat-header h3 {
+      font-size: 13.5px; font-weight: 700;
+      letter-spacing: 0.01em; color: var(--text);
+    }
+    .new-pill {
+      margin-left: auto;
+      background: var(--green); color: #fff;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.05em; padding: 3px 9px;
+      border-radius: 20px; text-transform: uppercase; flex-shrink: 0;
+    }
+
+    .cat-body {
+      padding: 14px 20px 18px;
+      display: flex; flex-direction: column; gap: 7px;
+    }
+    .q-chip {
+      display: block; font-size: 13px;
+      color: var(--text); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 8px 12px; line-height: 1.4;
+      transition: all .12s; cursor: default;
+    }
+    .q-chip:hover {
+      background: var(--green-light);
+      border-color: var(--green-mid);
+      color: var(--green-dark);
+    }
+    .q-chip::before { content: '"'; opacity: 0.35; }
+    .q-chip::after  { content: '"'; opacity: 0.35; }
+
+    /* ─── NEW SECTION BANNER ─── */
+    .new-section-banner {
+      background: linear-gradient(90deg, var(--green-light), #fff);
+      border: 1px solid var(--green-mid);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+      grid-column: 1 / -1;
+    }
+    .new-section-banner i[data-lucide] svg { width: 17px; height: 17px; stroke: var(--green); flex-shrink: 0; }
+    .new-section-banner span {
+      font-size: 13px; font-weight: 500; color: #065930;
+    }
+    .new-section-banner strong { font-weight: 700; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0A1F12;
+      color: rgba(255,255,255,0.5);
+      padding: 40px 32px;
+      text-align: center; font-size: 13px;
+    }
+    footer strong { color: #fff; }
+    footer a { color: var(--green); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="./glop-logo.png" class="nav-logo-icon" alt="Glop" style="border-radius:8px" />
+    Glop IA
+  </a>
+  <span class="nav-badge">
+    <i data-lucide="sparkles"></i>
+    Nueva funcionalidad
+  </span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- SVG waves -->
+  <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="wg1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#B8EDD0" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#6EDBA4" stop-opacity="0.3"/>
+      </linearGradient>
+      <linearGradient id="wg2" x1="100%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#D8F5E8" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#A0DFC0" stop-opacity="0.2"/>
+      </linearGradient>
+      <linearGradient id="wg3" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#E8F8EF" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#C0EDD4" stop-opacity="0.4"/>
+      </linearGradient>
+      <filter id="blur1">
+        <feGaussianBlur stdDeviation="18"/>
+      </filter>
+    </defs>
+
+    <!-- Blob superior derecha -->
+    <ellipse cx="1260" cy="-40" rx="420" ry="260" fill="url(#wg1)" filter="url(#blur1)" transform="rotate(-20 1260 -40)"/>
+
+    <!-- Onda fluida central-baja -->
+    <path d="M -80 420 C 160 340, 340 480, 620 390 C 900 300, 1080 440, 1360 360 C 1440 335, 1440 560, 1440 560 L -80 560 Z" fill="url(#wg3)"/>
+
+    <!-- Onda intermedia -->
+    <path d="M -80 480 C 200 410, 440 520, 740 455 C 1040 390, 1240 490, 1520 430 L 1520 560 L -80 560 Z" fill="#E8F8EF" opacity="0.6"/>
+
+    <!-- Blob esquina inferior izquierda -->
+    <ellipse cx="-60" cy="520" rx="320" ry="180" fill="url(#wg2)" filter="url(#blur1)" transform="rotate(15 -60 520)"/>
+
+    <!-- Línea de acento fina arriba -->
+    <path d="M 0 80 C 200 50, 500 110, 800 70 C 1100 30, 1300 90, 1440 60" stroke="#00B461" stroke-width="1" fill="none" opacity="0.15"/>
+    <path d="M 0 100 C 220 65, 520 130, 820 88 C 1120 46, 1310 108, 1440 80" stroke="#00B461" stroke-width="0.5" fill="none" opacity="0.10"/>
+  </svg>
+
+  <div class="hero-eyebrow">
+    <i data-lucide="zap"></i>
+    Guía práctica · Asistente IA
+  </div>
+  <h1>Pregunta a tu negocio,<br><em>recibe respuestas al instante</em></h1>
+  <p>Tu asistente IA conectado a Glop Cloud. Consulta tus datos de ventas en lenguaje natural, desde cualquier dispositivo, en segundos.</p>
+  <a href="#preguntas" class="hero-cta">
+    Ver qué puedes preguntar
+    <i data-lucide="arrow-right"></i>
+  </a>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section>
+  <div class="container">
+    <p class="section-label">Funcionamiento</p>
+    <h2 class="section-title">Tan fácil como enviar un mensaje</h2>
+    <p class="section-sub">No hay formularios, no hay filtros, no hay menús. Solo escribe tu pregunta y obtén la respuesta.</p>
+
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Abre el asistente IA en Glop Cloud</h3>
+        <p>Disponible desde cualquier dispositivo: ordenador, tablet o móvil. Siempre a mano.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Escribe tu pregunta en lenguaje natural</h3>
+        <p>Exactamente como lo dirías en voz alta. Sin comandos especiales, sin sintaxis técnica.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>Recibe la respuesta al instante</h3>
+        <p>La IA consulta los datos reales de tu negocio y te responde en segundos, con cifras exactas.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box-icon"><i data-lucide="shield-check"></i></div>
+      <p>El Asistente IA <strong>no inventa datos</strong> ni usa información genérica del sector. Trabaja con los datos de tu negocio registrados en Glop Cloud. Cuanto más uses tu TPV correctamente, mejores serán las respuestas.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PARA QUÉ SIRVE -->
+<section>
+  <div class="container">
+    <p class="section-label">Casos de uso</p>
+    <h2 class="section-title">¿Cuándo te resulta más útil?</h2>
+    <p class="section-sub">Situaciones reales del día a día en las que el asistente te ahorra tiempo y te da ventaja.</p>
+
+    <div class="usecases-grid">
+      <div class="usecase-card">
+        <div class="usecase-icon"><i data-lucide="smartphone"></i></div>
+        <div>
+          <h3>En movimiento</h3>
+          <ul>
+            <li>Haces recados y necesitas saber cómo van las ventas sin sentarte al ordenador</li>
+            <li>Estás de vacaciones y un empleado te llama con una duda sobre los números del mes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon"><i data-lucide="users"></i></div>
+        <div>
+          <h3>Con clientes o socios</h3>
+          <ul>
+            <li>Presentas tu negocio a un posible socio y te pregunta por las ventas anuales o el ticket medio</li>
+            <li>Un proveedor te visita y negociáis condiciones con datos reales sobre la marcha</li>
+          </ul>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon"><i data-lucide="utensils"></i></div>
+        <div>
+          <h3>Durante el servicio</h3>
+          <ul>
+            <li>En pleno turno quieres saber si vais por delante respecto al mismo día de la semana pasada</li>
+            <li>Un cliente fiel te pregunta si su producto favorito sigue siendo el más vendido</li>
+          </ul>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon"><i data-lucide="sun"></i></div>
+        <div>
+          <h3>Al abrir o cerrar</h3>
+          <ul>
+            <li>Al empezar el día quieres un resumen rápido de cómo cerró ayer</li>
+            <li>Al cerrar el turno quieres ver quién ha rendido más antes de hablar con el equipo</li>
+          </ul>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon"><i data-lucide="lightbulb"></i></div>
+        <div>
+          <h3>En reuniones o decisiones rápidas</h3>
+          <ul>
+            <li>Estás reunido con tu contable y surge una pregunta sobre los datos. Lo tienes ahí mismo</li>
+            <li>Tienes que decidir si repones un producto y consultas cuánto se ha vendido este mes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PREGUNTAS -->
+<section id="preguntas">
+  <div class="container">
+    <div class="categories-intro">
+      <p class="section-label">Referencia completa</p>
+      <h2 class="section-title">¿Qué puedes preguntarle?</h2>
+      <p class="section-sub">Ejemplos organizados por tipo de consulta. Úsalos tal cual o inspírate para formular las tuyas.</p>
+    </div>
+
+    <div class="categories-grid">
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="trending-up"></i></div>
+          <h3>Ventas y Facturación</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuánto hemos facturado este mes?</span>
+          <span class="q-chip">¿Cuánto facturamos la semana pasada?</span>
+          <span class="q-chip">¿Cuál ha sido el mejor día de ventas este año?</span>
+          <span class="q-chip">¿Cuánto facturamos en total el año pasado?</span>
+          <span class="q-chip">¿Cuál es la media de facturación diaria de este mes?</span>
+          <span class="q-chip">¿Qué porcentaje de las ventas corresponde a los últimos 7 días?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="user-check"></i></div>
+          <h3>Empleados</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Qué empleado vendió más ayer?</span>
+          <span class="q-chip">Top 3 empleados por ventas este mes</span>
+          <span class="q-chip">¿Cuántas ventas hizo cada empleado esta semana?</span>
+          <span class="q-chip">¿Qué empleado ha gestionado más tickets hoy?</span>
+          <span class="q-chip">¿Cuál es el ticket medio por empleado en febrero?</span>
+          <span class="q-chip">Comparativa de ventas entre empleados este trimestre</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="package"></i></div>
+          <h3>Productos</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">Top 10 productos de febrero</span>
+          <span class="q-chip">¿Qué producto ha vendido menos este mes?</span>
+          <span class="q-chip">¿Cuántas unidades del producto X se han vendido?</span>
+          <span class="q-chip">¿Qué productos no se han vendido en los últimos 30 días?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="layers"></i></div>
+          <h3>Familia y Categorías</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Qué familia factura más?</span>
+          <span class="q-chip">Dime el porcentaje de facturación por familia</span>
+          <span class="q-chip">¿Qué categoría ha crecido más respecto al mes anterior?</span>
+          <span class="q-chip">¿Cuántas unidades se han vendido por familia este mes?</span>
+          <span class="q-chip">Ranking de familias por número de tickets</span>
+          <span class="q-chip">¿Qué familia tiene el ticket medio más alto?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="line-chart"></i></div>
+          <h3>Tendencias</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cómo han ido las ventas día a día en marzo?</span>
+          <span class="q-chip">¿Cómo han evolucionado las ventas en los últimos 3 meses?</span>
+          <span class="q-chip">¿Cuál fue la semana con más ventas del trimestre?</span>
+          <span class="q-chip">¿Estamos creciendo o decreciendo respecto al año pasado?</span>
+          <span class="q-chip">Muéstrame la tendencia de ventas de los últimos 30 días</span>
+          <span class="q-chip">¿Qué mes del año suele ser el más fuerte en ventas?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="clock"></i></div>
+          <h3>Horas y Días</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Qué día de la semana vendemos más?</span>
+          <span class="q-chip">¿Cuál es la franja horaria con más ventas los fines de semana?</span>
+          <span class="q-chip">¿A qué hora se abre más el primer ticket del día?</span>
+          <span class="q-chip">¿Qué días de la semana son los más flojos?</span>
+          <span class="q-chip">Distribución de ventas por hora en febrero</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="credit-card"></i></div>
+          <h3>Métodos de Pago</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuánto se paga con tarjeta vs efectivo?</span>
+          <span class="q-chip">¿Qué método de pago se usa más los fines de semana?</span>
+          <span class="q-chip">¿Ha cambiado el uso de tarjeta respecto al mes anterior?</span>
+          <span class="q-chip">¿Cuántos pagos con tarjeta hubo ayer?</span>
+          <span class="q-chip">¿Qué porcentaje de pagos en efectivo en febrero?</span>
+          <span class="q-chip">¿Cuál es el importe medio por método de pago?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="store"></i></div>
+          <h3>Tiendas y Terminales</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Qué tienda vende más?</span>
+          <span class="q-chip">Ranking de ventas por terminales</span>
+          <span class="q-chip">Compara la facturación de las tiendas este mes</span>
+          <span class="q-chip">¿Qué terminal tiene el ticket medio más alto?</span>
+          <span class="q-chip">¿Cuántos tickets ha gestionado cada tienda hoy?</span>
+          <span class="q-chip">¿Qué tienda ha crecido más respecto al mes anterior?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="tag"></i></div>
+          <h3>Descuentos</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuántos descuentos hubo ayer?</span>
+          <span class="q-chip">Importe de descuentos de febrero</span>
+          <span class="q-chip">¿Qué empleado aplica más descuentos?</span>
+          <span class="q-chip">¿Cuál es el descuento medio por ticket?</span>
+          <span class="q-chip">¿En qué productos se aplican más descuentos?</span>
+          <span class="q-chip">¿Qué porcentaje de ventas con descuento este mes?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="bar-chart-2"></i></div>
+          <h3>Comparativas</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">Compara las ventas de este mes con el mes anterior</span>
+          <span class="q-chip">¿Cómo estamos este trimestre vs el mismo del año pasado?</span>
+          <span class="q-chip">Compara las ventas de enero, febrero y marzo</span>
+          <span class="q-chip">¿Qué tienda ha mejorado más respecto al año pasado?</span>
+          <span class="q-chip">Compara el rendimiento de los empleados este mes vs el anterior</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="undo-2"></i></div>
+          <h3>Abonos y Devoluciones</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuántos abonos hubo este mes?</span>
+          <span class="q-chip">Facturas rectificativas de febrero</span>
+          <span class="q-chip">¿Cuál es el importe total de devoluciones este mes?</span>
+          <span class="q-chip">¿Qué producto se devuelve más?</span>
+          <span class="q-chip">¿Qué porcentaje tengo de devoluciones sobre el total de ventas?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="alert-triangle"></i></div>
+          <h3>Incidencias</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuántas anulaciones hubo este mes?</span>
+          <span class="q-chip">¿Qué terminal registra más incidencias?</span>
+          <span class="q-chip">¿Qué empleado ha realizado más anulaciones?</span>
+          <span class="q-chip">Importe total de tickets anulados este mes</span>
+          <span class="q-chip">¿En qué franja horaria se producen más borrados?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="gift"></i></div>
+          <h3>Invitaciones</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuántas invitaciones hubo este mes?</span>
+          <span class="q-chip">¿Qué artículo se invita más?</span>
+          <span class="q-chip">Importe total de invitaciones de febrero</span>
+          <span class="q-chip">¿En qué días hay más invitaciones?</span>
+          <span class="q-chip">¿Qué porcentaje de invitaciones sobre el total de ventas?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="ticket"></i></div>
+          <h3>Entradas / Consumición</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuántas consumiciones hubo este mes?</span>
+          <span class="q-chip">¿Cuál es el día con más consumiciones registradas?</span>
+          <span class="q-chip">Comparativa de consumiciones este mes vs el anterior</span>
+          <span class="q-chip">¿A qué hora se registran más consumiciones?</span>
+          <span class="q-chip">¿Cuánto se factura de media por consumición?</span>
+          <span class="q-chip">Evolución de consumiciones en los últimos 3 meses</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="users-2"></i></div>
+          <h3>Comensales</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuántos comensales hubo este mes?</span>
+          <span class="q-chip">Gasto por comensal en febrero</span>
+          <span class="q-chip">¿Cuál fue el día con más comensales?</span>
+          <span class="q-chip">¿Cuál es la media de comensales por mesa?</span>
+          <span class="q-chip">Comparativa de comensales este mes vs el anterior</span>
+          <span class="q-chip">¿En qué franja horaria hay más comensales?</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="timer"></i></div>
+          <h3>Tiempo de Servicio</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuál es el tiempo medio por mesa?</span>
+          <span class="q-chip">¿Cuál es la rotación de mesas?</span>
+          <span class="q-chip">¿En qué días hay más rotación de mesas?</span>
+          <span class="q-chip">Comparativa de rotación de mesas este mes vs el anterior</span>
+        </div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="file-text"></i></div>
+          <h3>Tickets</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuántos tickets hubo este mes?</span>
+          <span class="q-chip">¿Cuál fue el ticket más grande?</span>
+          <span class="q-chip">Top 5 tickets más caros de marzo</span>
+          <span class="q-chip">¿Cuántos tickets se han emitido hoy?</span>
+          <span class="q-chip">Comparativa del ticket medio este mes vs el anterior</span>
+        </div>
+      </div>
+
+      <!-- CLIENTES -->
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="star"></i></div>
+          <h3>Clientes</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Quiénes son mis 10 mejores clientes este mes?</span>
+          <span class="q-chip">¿Cuánto ha gastado mi cliente más fiel este año?</span>
+          <span class="q-chip">Top 5 clientes por número de visitas en febrero</span>
+          <span class="q-chip">¿Qué clientes no han vuelto en los últimos 30 días?</span>
+          <span class="q-chip">¿Cuál es el gasto medio de mis mejores clientes?</span>
+          <span class="q-chip">Comparativa de mis top clientes este mes vs el anterior</span>
+        </div>
+      </div>
+
+      <!-- TURNOS -->
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="refresh-cw"></i></div>
+          <h3>Turnos</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cómo fue el turno de tarde de ayer?</span>
+          <span class="q-chip">¿Qué turno factura más de media?</span>
+          <span class="q-chip">Comparativa del turno de comidas este mes vs el anterior</span>
+          <span class="q-chip">¿Qué terminal rinde mejor en el turno de noche?</span>
+          <span class="q-chip">¿Cuántos tickets se gestionaron en el turno de mañana hoy?</span>
+          <span class="q-chip">Evolución del turno de cenas en los últimos 30 días</span>
+        </div>
+      </div>
+
+      <!-- FRANJA HORARIA -->
+      <div class="cat-card">
+        <div class="cat-header">
+          <div class="cat-icon"><i data-lucide="alarm-clock"></i></div>
+          <h3>Franja Horaria Específica</h3>
+        </div>
+        <div class="cat-body">
+          <span class="q-chip">¿Cuánto facturamos de 14:00 a 16:00 esta semana?</span>
+          <span class="q-chip">Ventas entre las 20:30 y las 23:00 el fin de semana</span>
+          <span class="q-chip">¿Qué se vendió de 10:00 a 12:00 este mes?</span>
+          <span class="q-chip">Compara la franja de mediodía (13:00–15:30) este mes vs el anterior</span>
+          <span class="q-chip">¿Cuántos tickets hubo entre las 21:00 y las 22:00 el sábado?</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Glop</strong> · Más que un TPV · <a href="https://glop.es">glop.es</a>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

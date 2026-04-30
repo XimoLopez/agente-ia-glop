@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Guía IA GLOP – Asistente de Ventas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #00B461;
+      --green-dark: #007A3D;
+      --green-light: #E8F8EF;
+      --green-mid: #B8EDD0;
+      --orange: #E8591A;
+      --text: #0A1F12;
+      --text-mid: #4B6B59;
+      --text-light: #7A9A84;
+      --border: #E5E7EB;
+    }
+
+    @page { size: A4 portrait; margin: 0; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: #fff;
+      color: var(--text);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      font-size: 10pt;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+
+    /* ─── COVER ─── */
+    .cover {
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+    .cover-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .cover-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 18mm 18mm 14mm;
+    }
+    .cover-top {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-box {
+      width: 38px; height: 38px;
+      background: var(--green);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; font-weight: 900; letter-spacing: -1px;
+    }
+    .brand-name { font-size: 16px; font-weight: 700; color: var(--text); }
+    .brand-tagline { font-size: 9px; color: var(--text-mid); letter-spacing: 0.05em; margin-top: 1px; }
+
+    .cover-center { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 20mm; }
+    .cover-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-light); border: 1px solid var(--green-mid);
+      color: var(--green-dark);
+      font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 20px;
+      margin-bottom: 22px; width: fit-content;
+    }
+    .cover-title {
+      font-size: 42pt; font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.03em; color: var(--text);
+      margin-bottom: 10px;
+    }
+    .cover-title em { font-style: normal; color: var(--green); }
+    .cover-subtitle {
+      font-size: 12pt; color: var(--text-mid);
+      max-width: 130mm; line-height: 1.6; font-weight: 400;
+      margin-bottom: 28px;
+    }
+    .cover-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green); color: #fff;
+      font-size: 9px; font-weight: 700;
+      padding: 6px 14px; border-radius: 8px; width: fit-content;
+    }
+
+    .cover-bottom {
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .cover-url { font-size: 9px; color: var(--text-light); letter-spacing: 0.05em; }
+    .cover-year { font-size: 9px; color: var(--text-light); }
+
+    /* ─── INNER PAGE HEADER ─── */
+    .page-header {
+      height: 14mm;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 14mm;
+    }
+    .page-header-logo {
+      display: flex; align-items: center; gap: 7px;
+    }
+    .page-header-logo .logo-box {
+      width: 24px; height: 24px; border-radius: 6px;
+      font-size: 11px; background: rgba(255,255,255,0.2);
+    }
+    .page-header-logo span { font-size: 10px; font-weight: 700; color: #fff; }
+    .page-header-title { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.8); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ─── INNER PAGE FOOTER ─── */
+    .page-footer {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 12mm;
+      padding: 0 14mm;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+    .page-footer span { font-size: 8px; color: var(--text-light); }
+    .page-number { font-size: 8px; font-weight: 600; color: var(--text-mid); }
+
+    /* ─── INNER CONTENT ─── */
+    .page-body {
+      padding: 10mm 14mm 14mm;
+      height: calc(297mm - 14mm - 12mm);
+      overflow: hidden;
+    }
+
+    .section-label {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: 5px;
+    }
+    .section-title {
+      font-size: 20pt; font-weight: 800; letter-spacing: -0.02em;
+      line-height: 1.15; color: var(--text); margin-bottom: 8px;
+    }
+    .section-sub {
+      font-size: 10pt; color: var(--text-mid); line-height: 1.65;
+      max-width: 150mm; margin-bottom: 12mm;
+    }
+
+    /* ─── STEPS ─── */
+    .steps { display: flex; gap: 5mm; margin-bottom: 12mm; }
+    .step {
+      flex: 1;
+      background: var(--green-light);
+      border-radius: 8px; padding: 7mm 6mm;
+      border-top: 3px solid var(--green);
+    }
+    .step-num {
+      font-size: 17pt; font-weight: 900; color: var(--green);
+      margin-bottom: 4mm; line-height: 1;
+    }
+    .step h4 { font-size: 9pt; font-weight: 700; margin-bottom: 3px; color: var(--text); }
+    .step p { font-size: 8pt; color: var(--text-mid); line-height: 1.55; }
+
+    /* ─── HIGHLIGHT BOX ─── */
+    .highlight {
+      background: var(--green-light); border-left: 3px solid var(--green);
+      border-radius: 6px; padding: 5mm 6mm;
+      margin-bottom: 10mm;
+    }
+    .highlight p { font-size: 9pt; color: var(--green-dark); line-height: 1.65; }
+    .highlight strong { font-weight: 700; }
+
+    /* ─── USE CASES ─── */
+    .usecases { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+    .usecase {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 8px; padding: 5mm 5mm;
+    }
+    .usecase h4 {
+      font-size: 8pt; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--orange); margin-bottom: 4px;
+    }
+    .usecase ul { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+    .usecase ul li {
+      font-size: 8pt; color: var(--text-mid);
+      padding-left: 10px; position: relative; line-height: 1.45;
+    }
+    .usecase ul li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--green); font-size: 7.5pt;
+    }
+
+    /* ─── CATEGORIES GRID ─── */
+    .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+    .cats-3 { grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+
+    .cat {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .cat-head {
+      padding: 4mm 5mm 3mm;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cat-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+    }
+    .cat-head h4 {
+      font-size: 8.5pt; font-weight: 700; color: var(--text);
+      letter-spacing: 0.01em;
+    }
+    .cat-body { padding: 3mm 5mm 4mm; display: flex; flex-direction: column; gap: 2.5px; }
+    .q {
+      font-size: 7.5pt; color: var(--text-mid);
+      background: #F7F9F7; border: 1px solid #EAEEF0;
+      border-radius: 5px; padding: 3.5px 7px; line-height: 1.35;
+    }
+    .q::before { content: '"'; opacity: 0.4; }
+    .q::after  { content: '"'; opacity: 0.4; }
+
+    /* ─── INTRO TEXT ─── */
+    .intro-text p {
+      font-size: 10.5pt; color: var(--text-mid);
+      line-height: 1.7; margin-bottom: 6mm;
+    }
+    .intro-text p strong { color: var(--text); font-weight: 700; }
+
+    .divider { height: 1px; background: var(--border); margin: 8mm 0; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     PORTADA
+════════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <svg class="cover-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 842" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#B8EDD0" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#6EDBA4" stop-opacity="0.25"/>
+      </linearGradient>
+      <linearGradient id="cg2" x1="100%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#D8F5E8" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#A0DFC0" stop-opacity="0.15"/>
+      </linearGradient>
+      <linearGradient id="cg3" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#E8F8EF" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#C0EDD4" stop-opacity="0.5"/>
+      </linearGradient>
+      <filter id="cb">
+        <feGaussianBlur stdDeviation="30"/>
+      </filter>
+    </defs>
+    <!-- Blob arriba derecha -->
+    <ellipse cx="540" cy="-30" rx="300" ry="200" fill="url(#cg1)" filter="url(#cb)" transform="rotate(-20 540 -30)"/>
+    <!-- Onda baja principal -->
+    <path d="M -20 640 C 120 580, 260 680, 430 610 C 600 540, 520 700, 620 650 L 620 842 L -20 842 Z" fill="url(#cg3)"/>
+    <!-- Onda baja intermedia -->
+    <path d="M -20 720 C 150 670, 340 760, 540 700 C 620 676, 620 842, 620 842 L -20 842 Z" fill="#E8F8EF" opacity="0.55"/>
+    <!-- Blob abajo izquierda -->
+    <ellipse cx="-30" cy="800" rx="240" ry="140" fill="url(#cg2)" filter="url(#cb)" transform="rotate(15 -30 800)"/>
+    <!-- Línea acento -->
+    <path d="M 0 140 C 150 110, 350 160, 595 120" stroke="#00B461" stroke-width="0.8" fill="none" opacity="0.15"/>
+    <path d="M 0 158 C 170 124, 370 178, 595 138" stroke="#00B461" stroke-width="0.4" fill="none" opacity="0.10"/>
+  </svg>
+
+  <div class="cover-content">
+    <div class="cover-top">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RIZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="44" height="44" style="border-radius:11px" alt="Glop"/>
+      <div class="brand-tagline" style="font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-mid)">Más que un TPV</div>
+    </div>
+
+    <div class="cover-center">
+      <div class="cover-eyebrow">Guías de buenas prácticas</div>
+      <div class="cover-title">Guía Práctica:<br><em>Asistente IA</em><br>para tus ventas</div>
+      <div class="cover-subtitle">Tu asistente de ventas inteligente conectado a Glop Cloud. Consulta tus datos en lenguaje natural, desde cualquier dispositivo, en segundos.</div>
+      <div class="cover-pill">Nueva funcionalidad con IA</div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-url">glop.es · app.glop.es</div>
+      <div class="cover-year">2026</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 2: INTRODUCCIÓN
+════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-logo">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/>
+      <span>Glop IA</span>
+    </div>
+    <span class="page-header-title">Asistente IA para tus ventas</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Nueva funcionalidad con IA</p>
+    <h2 class="section-title">Tu negocio responde<br>cuando le preguntas</h2>
+    <div class="intro-text">
+      <p>Cada venta que realizas genera datos. Cada ticket que se imprime, cada empleado que cobra una mesa, cada producto que sale de caja... y todo ello queda registrado en Glop Cloud.</p>
+      <p>Antes, encontrar esas respuestas significaba navegar por distintos apartados de la plataforma y dedicar un buen rato al análisis. <strong>Ahora solo tienes que preguntar.</strong></p>
+      <p>Desde Glop hemos desarrollado una IA conectada a Glop Cloud que puede acceder a los datos de tu negocio y te responde en segundos desde cualquier dispositivo.</p>
+    </div>
+
+    <div class="highlight">
+      <p>El Asistente IA <strong>no inventa datos</strong> ni usa información genérica del sector. Trabaja exclusivamente con los datos de tu negocio registrados en Glop Cloud. Cuanto más uses tu TPV correctamente, mejores serán las respuestas.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="section-label">Funcionamiento</p>
+    <h2 class="section-title" style="font-size:16pt;margin-bottom:7mm">Tan fácil como enviar un mensaje</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Abre el asistente IA en Glop Cloud</h4>
+        <p>Disponible desde cualquier dispositivo: ordenador, tablet o móvil. Siempre a mano.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Escribe tu pregunta en lenguaje natural</h4>
+        <p>Exactamente como lo dirías en voz alta. Sin comandos especiales, sin sintaxis técnica.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Recibe la respuesta al instante</h4>
+        <p>La IA consulta los datos reales de tu negocio y te responde en segundos, con cifras exactas.</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Guía Práctica: Asistente IA · Glop</span>
+    <span class="page-number">02</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 3: CASOS DE USO
+════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-logo">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/>
+      <span>Glop IA</span>
+    </div>
+    <span class="page-header-title">Asistente IA para tus ventas</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Casos de uso</p>
+    <h2 class="section-title">¿Cuándo te resulta más útil?</h2>
+    <p class="section-sub" style="margin-bottom:8mm">Situaciones reales del día a día en las que el asistente te ahorra tiempo y te da ventaja.</p>
+
+    <div class="usecases">
+      <div class="usecase">
+        <h4>En movimiento</h4>
+        <ul>
+          <li>Haces recados y necesitas saber cómo van las ventas sin sentarte al ordenador</li>
+          <li>Estás de vacaciones y un empleado te llama con una duda sobre los números del mes. Lo resuelves desde el móvil en segundos</li>
+        </ul>
+      </div>
+      <div class="usecase">
+        <h4>Con clientes o socios</h4>
+        <ul>
+          <li>Presentas tu negocio a un posible socio y te pregunta por las ventas anuales o el ticket medio. Se lo muestras en el momento</li>
+          <li>Un proveedor te visita y negociáis condiciones con datos reales sobre la marcha</li>
+        </ul>
+      </div>
+      <div class="usecase">
+        <h4>Durante el servicio</h4>
+        <ul>
+          <li>En pleno turno quieres saber si vais por delante respecto al mismo día de la semana pasada</li>
+          <li>Un cliente fiel te pregunta si su producto favorito sigue siendo el más vendido</li>
+        </ul>
+      </div>
+      <div class="usecase">
+        <h4>Al abrir o cerrar</h4>
+        <ul>
+          <li>Al empezar el día quieres un resumen rápido de cómo cerró ayer sin tener que buscar el informe</li>
+          <li>Al cerrar el turno quieres ver quién ha rendido más antes de hablar con el equipo</li>
+        </ul>
+      </div>
+      <div class="usecase">
+        <h4>En reuniones o decisiones rápidas</h4>
+        <ul>
+          <li>Estás reunido con tu contable y surge una pregunta sobre los datos. No tienes que "mirarlo luego"</li>
+          <li>Tienes que decidir si repones un producto y consultas cuánto se ha vendido este mes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Guía Práctica: Asistente IA · Glop</span>
+    <span class="page-number">03</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINAS DE CATEGORÍAS — helper
+════════════════════════════════════════════════════════ -->
+
+<!-- Pág 4 -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
+    <span class="page-header-title">Qué puedes preguntarle</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Referencia completa</p>
+    <h2 class="section-title" style="font-size:16pt;margin-bottom:7mm">¿Qué puedes preguntarle?</h2>
+    <div class="cats">
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Ventas y Facturación</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuánto hemos facturado este mes?</div>
+          <div class="q">¿Cuánto facturamos la semana pasada?</div>
+          <div class="q">¿Cuál ha sido el mejor día de ventas este año?</div>
+          <div class="q">¿Cuánto facturamos en total el año pasado?</div>
+          <div class="q">¿Cuál es la media de facturación diaria de este mes?</div>
+          <div class="q">¿Qué porcentaje de las ventas corresponde a los últimos 7 días?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Empleados</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Qué empleado vendió más ayer?</div>
+          <div class="q">Top 3 empleados por ventas este mes</div>
+          <div class="q">¿Cuántas ventas hizo cada empleado esta semana?</div>
+          <div class="q">¿Qué empleado ha gestionado más tickets hoy?</div>
+          <div class="q">¿Cuál es el ticket medio por empleado en febrero?</div>
+          <div class="q">Comparativa de ventas entre empleados este trimestre</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Productos</h4></div>
+        <div class="cat-body">
+          <div class="q">Top 10 productos de febrero</div>
+          <div class="q">¿Qué producto ha vendido menos este mes?</div>
+          <div class="q">¿Cuántas unidades del producto X se han vendido?</div>
+          <div class="q">¿Qué productos no se han vendido en los últimos 30 días?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Familia y Categorías</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Qué familia factura más?</div>
+          <div class="q">Dime el porcentaje de facturación por familia</div>
+          <div class="q">¿Qué categoría ha crecido más respecto al mes anterior?</div>
+          <div class="q">¿Cuántas unidades se han vendido por familia este mes?</div>
+          <div class="q">Ranking de familias por número de tickets</div>
+          <div class="q">¿Qué familia tiene el ticket medio más alto?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Guía Práctica: Asistente IA · Glop</span>
+    <span class="page-number">04</span>
+  </div>
+</div>
+
+<!-- Pág 5 -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
+    <span class="page-header-title">Qué puedes preguntarle</span>
+  </div>
+  <div class="page-body" style="padding-top:8mm">
+    <div class="cats">
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Tendencias</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cómo han ido las ventas día a día en marzo?</div>
+          <div class="q">¿Cómo han evolucionado las ventas en los últimos 3 meses?</div>
+          <div class="q">¿Cuál fue la semana con más ventas del trimestre?</div>
+          <div class="q">¿Estamos creciendo o decreciendo respecto al año pasado?</div>
+          <div class="q">Muéstrame la tendencia de ventas de los últimos 30 días</div>
+          <div class="q">¿Qué mes del año suele ser el más fuerte en ventas?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Horas y Días</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Qué día de la semana vendemos más?</div>
+          <div class="q">¿Cuál es la franja horaria con más ventas los fines de semana?</div>
+          <div class="q">¿A qué hora se abre más el primer ticket del día?</div>
+          <div class="q">¿Qué días de la semana son los más flojos?</div>
+          <div class="q">Distribución de ventas por hora en febrero</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Métodos de Pago</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuánto se paga con tarjeta vs efectivo?</div>
+          <div class="q">¿Qué método de pago se usa más los fines de semana?</div>
+          <div class="q">¿Ha cambiado el uso de tarjeta respecto al mes anterior?</div>
+          <div class="q">¿Cuántos pagos con tarjeta hubo ayer?</div>
+          <div class="q">¿Qué porcentaje de pagos en efectivo en febrero?</div>
+          <div class="q">¿Cuál es el importe medio por método de pago?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Tiendas y Terminales</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Qué tienda vende más?</div>
+          <div class="q">Ranking de ventas por terminales</div>
+          <div class="q">Compara la facturación de las tiendas este mes</div>
+          <div class="q">¿Qué terminal tiene el ticket medio más alto?</div>
+          <div class="q">¿Cuántos tickets ha gestionado cada tienda hoy?</div>
+          <div class="q">¿Qué tienda ha crecido más respecto al mes anterior?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Guía Práctica: Asistente IA · Glop</span>
+    <span class="page-number">05</span>
+  </div>
+</div>
+
+<!-- Pág 6 -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
+    <span class="page-header-title">Qué puedes preguntarle</span>
+  </div>
+  <div class="page-body" style="padding-top:8mm">
+    <div class="cats">
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Descuentos</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuántos descuentos hubo ayer?</div>
+          <div class="q">Importe de descuentos de febrero</div>
+          <div class="q">¿Qué empleado aplica más descuentos?</div>
+          <div class="q">¿Cuál es el descuento medio por ticket?</div>
+          <div class="q">¿En qué productos se aplican más descuentos?</div>
+          <div class="q">¿Qué porcentaje de ventas con descuento este mes?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Comparativas</h4></div>
+        <div class="cat-body">
+          <div class="q">Compara las ventas de este mes con el mes anterior</div>
+          <div class="q">¿Cómo estamos este trimestre vs el mismo del año pasado?</div>
+          <div class="q">Compara las ventas de enero, febrero y marzo</div>
+          <div class="q">¿Qué tienda ha mejorado más respecto al año pasado?</div>
+          <div class="q">Compara el rendimiento de los empleados este mes vs el anterior</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Abonos y Devoluciones</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuántos abonos hubo este mes?</div>
+          <div class="q">Facturas rectificativas de febrero</div>
+          <div class="q">¿Cuál es el importe total de devoluciones este mes?</div>
+          <div class="q">¿Qué producto se devuelve más?</div>
+          <div class="q">¿Qué porcentaje tengo de devoluciones sobre el total de ventas?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Incidencias</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuántas anulaciones hubo este mes?</div>
+          <div class="q">¿Qué terminal registra más incidencias?</div>
+          <div class="q">¿Qué empleado ha realizado más anulaciones?</div>
+          <div class="q">Importe total de tickets anulados este mes</div>
+          <div class="q">¿En qué franja horaria se producen más borrados?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Guía Práctica: Asistente IA · Glop</span>
+    <span class="page-number">06</span>
+  </div>
+</div>
+
+<!-- Pág 7 -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
+    <span class="page-header-title">Qué puedes preguntarle</span>
+  </div>
+  <div class="page-body" style="padding-top:8mm">
+    <div class="cats">
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Invitaciones</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuántas invitaciones hubo este mes?</div>
+          <div class="q">¿Qué artículo se invita más?</div>
+          <div class="q">Importe total de invitaciones de febrero</div>
+          <div class="q">¿En qué días hay más invitaciones?</div>
+          <div class="q">¿Qué porcentaje de invitaciones sobre el total de ventas?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Entradas / Consumición</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuántas consumiciones hubo este mes?</div>
+          <div class="q">¿Cuál es el día con más consumiciones registradas?</div>
+          <div class="q">Comparativa de consumiciones este mes vs el anterior</div>
+          <div class="q">¿A qué hora se registran más consumiciones?</div>
+          <div class="q">¿Cuánto se factura de media por consumición?</div>
+          <div class="q">Evolución de consumiciones en los últimos 3 meses</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Comensales</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuántos comensales hubo este mes?</div>
+          <div class="q">Gasto por comensal en febrero</div>
+          <div class="q">¿Cuál fue el día con más comensales?</div>
+          <div class="q">¿Cuál es la media de comensales por mesa?</div>
+          <div class="q">Comparativa de comensales este mes vs el anterior</div>
+          <div class="q">¿En qué franja horaria hay más comensales?</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Tiempo de Servicio</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuál es el tiempo medio por mesa?</div>
+          <div class="q">¿Cuál es la rotación de mesas?</div>
+          <div class="q">¿En qué días hay más rotación de mesas?</div>
+          <div class="q">Comparativa de rotación de mesas este mes vs el anterior</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Guía Práctica: Asistente IA · Glop</span>
+    <span class="page-number">07</span>
+  </div>
+</div>
+
+<!-- Pág 8 -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABTCAMAAAAlZ5C/AAAAZlBMVEUrumj///8iuGQNtl0AtVpxzZXW8ODs+PEduGL3/fr7/vwyvW/T797b8uTw+vTz+/ZOw31BwHad27Tm9uxhyIqA0Z+k3rqy4sSH06SQ16u/586X2K/M7Niq4L7F6dO45clZxoQAslABj3yDAAAEy0lEQVRYhbWZiZajKhCGZTGixAWXuMUk9/1f8laVG5jM9HS3cM6cM+3ySeCvqh8I2HuLsyq9D+009k1YF8ZorYNDg0vGFK867Ppyej6uaZQn76DAYlb3Z9mFL6O5EtCUUpzzI9ZpcF/Rs0IFuniF/fRI8wP88iybVyClJN5fcV9+CSBFOD7TFR7Dh3/O/PQVJfQKT+V54LWJbIEP4ny4vCzwmzofLp4LvDlxvNem+gX+8gDn4QJ/C5Ez4MUMzz10HGJ4hlce5hO6nhP84kGJMKMVwR9e4OJC8NYP/EFwHzE0RxHAez/wieCdF7gqCR560TnGvzc4bwjuI7XMyQXghU+48cEOeE1wH0kR4C+Ce2FTzgX4m8zRIYDH+CXdIDw5wAWv+7Zt+xr+93u4k7eUblfLFA9mvQVTf/9uetMIj+23BEifVW3fdBN6plJs8O9nfYTn1lsCYjYKySYKWUO6n+SP4Qrh2f6WAuHf5TrSXA5gO9SP4QnAI8vMZW5BFSmLfgwXCK82OGZJJ9GgVskxOXCuPuj0/aKIHbiM2NXtH3SdVGLBlSiacWzMplMD6UOpVz92NXe04cCpn67o+Sus3Z6LsJqFmtbzBbAQhWwiupbfbHHkAN8MNKX346+dffsGFy1j2bMsBwiGnq6oiJmBJY+yfIJrTvdXZWbD4cXsD059haNUb5gbhIISGaoZ/mB3LfHaDcW2wZ2egxm4fAGHkC6XR+TE8qXnG1F2Vl079Py6+yMutmbBobu7VFVGM4RwvQEvOwLkEbCrBX+u4d6xeGmU7hc4PL/7EPAO2GMclu33wnN58Bl+3xYwAE/mxmw4li1ug2a45U1MshW2A3ywpkNRE8aGY3HZtcYNiQvgVuCBMGv+CQ6TXR0mFHEWvGaJ9YCmewC3KjxMRGjDN4VgvT6EtWq+CecH+L4K5W++EUbKHnNjRxl+ShDcclU62T51gMsrq9zcwmMHLtg2okAdaRQBvgc9fnA1E24Q0biUNh0CxYHL+yZWSmrT3PM9ruWTpZvOMycrotJZuNNFyFyd49dXLWJhwRHAIBpXBRvLM1PishUCQ8aapRRxCbMZRo7OYS1SBfg2F0UyL0kAnrCQ3hG6skrPIZ+j9GCQr2AqhApq+Bnlf7kDD3TG8t5wbspkGQCAQyeeRcB1F7NkV84bPFDmSts6VQVfiUMht2GZUVzj/Rzdx2PGYMqt4e8Yr2WvXW1U5tw0y2U9RDA4SX7tlILAamn2i3YVqQgfURxHQ71WJtC5Ut0lj/NLb1c6KtC5qz5MiNoYA+mZHlnqjVD7fcXhmRUzB5GSisM/m0Pw+AD/ZnMj1G7vdu48uPYOf7fQ58DNCeYfrcVHeHHCsoWPt4+LqmXZ8ssFl/o8rOfA/9CW1ZzXRW7tB9743FjoCN742RAZPW7moCsFeOlnp6gl+ORzA83HDvdc7AH+7bXxv8HnTcvUCxwtB8AjLxMaJASPvbDNsn/uI3NhUiS4j+SCqYXgPrZEcalP8MnHacuwwH1soMt0gR9XQmc0kdtnc2eSOZjAZD1VvE9dbZSU4jeHivOxogCKrrvb1T0PTaLLcHOOQ/lXx6GBdSKKB6J1OLZ3NN/vh62Hg9zb2NFB7odz3LlpvZzl3trh81Hu/7IcNtpu49lGAAAAAElFTkSuQmCC" width="24" height="24" style="border-radius:6px" alt="Glop"/><span>Glop IA</span></div>
+    <span class="page-header-title">Qué puedes preguntarle</span>
+  </div>
+  <div class="page-body" style="padding-top:8mm">
+    <div class="cats">
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Tickets</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuántos tickets hubo este mes?</div>
+          <div class="q">¿Cuál fue el ticket más grande?</div>
+          <div class="q">Top 5 tickets más caros de marzo</div>
+          <div class="q">¿Cuántos tickets se han emitido hoy?</div>
+          <div class="q">Comparativa del ticket medio este mes vs el anterior</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Clientes</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Quiénes son mis 10 mejores clientes este mes?</div>
+          <div class="q">¿Cuánto ha gastado mi cliente más fiel este año?</div>
+          <div class="q">Top 5 clientes por número de visitas en febrero</div>
+          <div class="q">¿Qué clientes no han vuelto en los últimos 30 días?</div>
+          <div class="q">¿Cuál es el gasto medio de mis mejores clientes?</div>
+          <div class="q">Comparativa de mis top clientes este mes vs el anterior</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Turnos</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cómo fue el turno de tarde de ayer?</div>
+          <div class="q">¿Qué turno factura más de media?</div>
+          <div class="q">Comparativa del turno de comidas este mes vs el anterior</div>
+          <div class="q">¿Qué terminal rinde mejor en el turno de noche?</div>
+          <div class="q">¿Cuántos tickets se gestionaron en el turno de mañana hoy?</div>
+          <div class="q">Evolución del turno de cenas en los últimos 30 días</div>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="cat-head"><div class="cat-dot"></div><h4>Franja Horaria Específica</h4></div>
+        <div class="cat-body">
+          <div class="q">¿Cuánto facturamos de 14:00 a 16:00 esta semana?</div>
+          <div class="q">Ventas entre las 20:30 y las 23:00 el fin de semana</div>
+          <div class="q">¿Qué se vendió de 10:00 a 12:00 este mes?</div>
+          <div class="q">Compara la franja de mediodía (13:00–15:30) este mes vs el anterior</div>
+          <div class="q">¿Cuántos tickets hubo entre las 21:00 y las 22:00 el sábado?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Guía Práctica: Asistente IA · Glop</span>
+    <span class="page-number">08</span>
+  </div>
+</div>
+
+</body>
+</html>
